@@ -1,4 +1,10 @@
-/**
- * Created by art on 8/15/16.
- */
-document.getElementById("dis").innerHTML = "i dont know";
+var xhttp = new XMLHttpRequest();
+
+console.log("hello javascript");
+
+function dropdata()
+{
+        xhttp.open("GET", "getdata", false);
+        xhttp.send("hello");
+        document.getElementById("demo").innerHTML = xhttp.responseText;
+}
