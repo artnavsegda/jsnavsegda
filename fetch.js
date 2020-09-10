@@ -1,14 +1,16 @@
 function main()
 {
-    console.log("Hello !");
+    console.log("Hello !")
     fetch("https://artnavsegda.herokuapp.com/q?ask=cat")
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json());
-    }
+        if (!response.ok)
+            throw new Error("connect failure")
+        return response.json()
+    })
     .then(variants => {
-        console.log(variants.toString());
+        console.log(variants.toString())
+    })
+    .catch(error => {
+        console.error('error:', error);
     })
 }
