@@ -30,7 +30,7 @@
     var button = document.querySelector("button"),
         output = document.querySelector("#output"),
         textarea = document.querySelector("textarea"),
-        wsUri = "ws://echo.websocket.org/",
+        wsUri = "wss://echo.websocket.events",
         // wsUri = "ws://127.0.0.1/",
         websocket = new WebSocket(wsUri);
 
@@ -47,7 +47,7 @@
 
     websocket.onmessage = function (e) {
         writeToScreen("<span>RESPONSE: " + e.data + "</span>");
-        websocket.close();
+        //websocket.close();
     };
 
     websocket.onerror = function (e) {
