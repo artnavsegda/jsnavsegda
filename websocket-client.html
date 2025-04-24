@@ -30,7 +30,7 @@
     var button = document.querySelector("button"),
         output = document.querySelector("#output"),
         textarea = document.querySelector("textarea"),
-        wsUri = "wss://echo.websocket.events",
+        wsUri = "wss://app.sever-metropol.ru/service/graphql",
         // wsUri = "ws://127.0.0.1/",
         websocket = new WebSocket(wsUri);
 
@@ -38,7 +38,7 @@
 
     websocket.onopen = function (e) {
         writeToScreen("CONNECTED");
-        doSend("WebSocket rocks");
+        //doSend("WebSocket rocks");
     };
 
     websocket.onclose = function (e) {
