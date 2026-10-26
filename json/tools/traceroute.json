@@ -1,6 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
+    "ruDescription": "traceroute к удалённому узлу",
+    "description": "Traceroute to remote host",
     "definitions": {
         "local-ip": {
             "$ref": "/defaults#/definitions/interface-ipaddr",
@@ -45,6 +47,16 @@
             "default": 33434,
             "ruDescription": "Начальный UDP порт назначения, увеличивается с каждой пробой (только для протокола UDP)",
             "description": "Initial UDP destination port, incremented per probe (UDP protocol only)"
+        }
+    },
+    "actions": {
+        "start": {
+            "exec": "handler",
+            "args": [
+                "run",
+                "tools/traceroute"
+            ],
+            "wait": true,
         }
     }
 }
