@@ -56,7 +56,7 @@
                 "run",
                 "tools/traceroute"
             ],
-            "wait": true,
+            "wait": true
         }
     }
 }
