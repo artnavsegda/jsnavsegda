@@ -1,0 +1,40 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "definitions": {
+        "local-ip": {
+            "$ref": "/defaults#/definitions/interface-ipaddr",
+            "title": "Local IP",
+            "ruDescription": "Локальный адрес или интерфейс источника",
+            "description": "Local source address or interface"
+        },
+        "count": {
+            "type": "number",
+            "minimum": 1,
+            "default": 10,
+            "ruDescription": "Число отправляемых пакетов",
+            "description": "Number of packets to send"
+        }
+    },
+    "required": [
+        "host"
+    ],
+    "properties": {
+        "host": {
+            "$ref": "/defaults#/definitions/host"
+        },
+        "local-ip": {
+            "$ref": "#/definitions/local-ip"
+        },
+        "count": {
+            "$ref": "#/definitions/count"
+        },
+        "size": {
+            "type": "number",
+            "minimum": 8,
+            "default": 64,
+            "ruDescription": "Размер пакета",
+            "description": "Packet size"
+        }
+    }
+}
