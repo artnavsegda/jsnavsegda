@@ -10,97 +10,88 @@
             "description": "Number of packets to send"
         }
     },
-    "exec": "subscript/tools/sniffer.uc",
-    "args": [
-        "run"
+    "required": [
+        "interface"
     ],
-    "ruDescription": "Сетевой анализатор пакетов",
-    "description": "Network packet analyzer",
-    "wait": true,
-    "schema": {
-        "required": [
-            "interface"
-        ],
-        "properties": {
-            "interface": {
-                "strictEnum": true,
-                "$ref": "/defaults#/definitions/interface",
-                "ruDescription": "Интерфейс для захвата пакетов",
-                "description": "Packet capture interface"
-            },
-            "proto": {
-                "type": "string",
-                "title": "Protocol",
-                "enum": [
-                    "arp",
-                    "aarp",
-                    "rarp",
-                    "ip",
-                    "ip6",
-                    "ipx",
-                    "icmp",
-                    "igmp",
-                    "tcp",
-                    "udp",
-                    "esp",
-                    "vlan",
-                    "stp",
-                    "pppoed",
-                    "pppoes",
-                    "mpls"
-                ],
-                "strictEnum": true,
-                "default": "none",
-                "ruDescription": "Фильтр по протоколу",
-                "description": "Protocol filter"
-            },
-            "host": {
-                "$ref": "/defaults#/definitions/host-cidr",
-                "enableInvert": true,
-                "ruDescription": "Фильтр по адресу или сети источника или назначения пакета",
-                "description": "Source or destination host or network filter",
-                "pattern": "(^!?([01]?\\d\\d?|2[0-4]\\d|25[0-5])(\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])){3}(\\/([0-2]?\\d|3[0-2]))?$)|(^!?(?!-)(?:(?:(?:(?:\\d?[A-Za-z-])|(?:[A-Za-z]))[A-Za-z-\\d]*(?:(?:[A-Za-z]*\\d)|(?:[A-Za-z])?)|\\d+)\\.*)*(?:(?:(?:\\d?[A-Za-z-])|(?:[A-Za-z]))[A-Za-z-\\d]*(?:(?:[A-Za-z]*\\d)|(?:[A-Za-z])))$)",
-                "ruPatternDescription": "Адрес хоста (FQDN или CIDR адрес)",
-                "patternDescription": "Host address (FQDN or CIDR address)",
-                "patternExample": [
-                    "localhost",
-                    "sample.example.com",
-                    "8.8.8.8",
-                    "192.168.1.0/24",
-                    "!192.168.1.0/24"
-                ]
-            },
-            "port": {
-                "$ref": "/defaults#/definitions/port",
-                "enableInvert": true,
-                "ruDescription": "Фильтр по порту источника или назначения пакета",
-                "description": "Source or destination port filter"
-            },
-            "mac": {
-                "type": "string",
-                "title": "MAC",
-                "ruDescription": "Фильтр по MAC адресу источника или назначения пакета",
-                "description": "Source or destination MAC address filter",
-                "enableInvert": true,
-                "pattern": "^!?((\\d|[a-fA-F]){2}:){5}(\\d|[a-fA-F]){2}$",
-                "ruPatternDescription": "MAC адрес",
-                "patternDescription": "MAC address",
-                "patternExample": [
-                    "ff:ff:ff:ff:ff:ff",
-                    "BE:AF:CO:OF:FE:E0"
-                ]
-            },
-            "count": {
-                "$ref": "#/definitions/count"
-            },
-            "file": {
-                "type": "string",
-                "ruDescription": "Сохранить дамп пакетов в файл",
-                "description": "File name for packet dump",
-                "pattern": "^[a-zA-Z0-9\\_\\-\\.]+$",
-                "ruPatternDescription": "Буквы, цифры и перечиленные символы: _-.",
-                "patternDescription": "Letters, digits and symbols: _-."
-            }
+    "properties": {
+        "interface": {
+            "strictEnum": true,
+            "$ref": "/defaults#/definitions/interface",
+            "ruDescription": "Интерфейс для захвата пакетов",
+            "description": "Packet capture interface"
+        },
+        "proto": {
+            "type": "string",
+            "title": "Protocol",
+            "enum": [
+                "arp",
+                "aarp",
+                "rarp",
+                "ip",
+                "ip6",
+                "ipx",
+                "icmp",
+                "igmp",
+                "tcp",
+                "udp",
+                "esp",
+                "vlan",
+                "stp",
+                "pppoed",
+                "pppoes",
+                "mpls"
+            ],
+            "strictEnum": true,
+            "default": "none",
+            "ruDescription": "Фильтр по протоколу",
+            "description": "Protocol filter"
+        },
+        "host": {
+            "$ref": "/defaults#/definitions/host-cidr",
+            "enableInvert": true,
+            "ruDescription": "Фильтр по адресу или сети источника или назначения пакета",
+            "description": "Source or destination host or network filter",
+            "pattern": "(^!?([01]?\\d\\d?|2[0-4]\\d|25[0-5])(\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])){3}(\\/([0-2]?\\d|3[0-2]))?$)|(^!?(?!-)(?:(?:(?:(?:\\d?[A-Za-z-])|(?:[A-Za-z]))[A-Za-z-\\d]*(?:(?:[A-Za-z]*\\d)|(?:[A-Za-z])?)|\\d+)\\.*)*(?:(?:(?:\\d?[A-Za-z-])|(?:[A-Za-z]))[A-Za-z-\\d]*(?:(?:[A-Za-z]*\\d)|(?:[A-Za-z])))$)",
+            "ruPatternDescription": "Адрес хоста (FQDN или CIDR адрес)",
+            "patternDescription": "Host address (FQDN or CIDR address)",
+            "patternExample": [
+                "localhost",
+                "sample.example.com",
+                "8.8.8.8",
+                "192.168.1.0/24",
+                "!192.168.1.0/24"
+            ]
+        },
+        "port": {
+            "$ref": "/defaults#/definitions/port",
+            "enableInvert": true,
+            "ruDescription": "Фильтр по порту источника или назначения пакета",
+            "description": "Source or destination port filter"
+        },
+        "mac": {
+            "type": "string",
+            "title": "MAC",
+            "ruDescription": "Фильтр по MAC адресу источника или назначения пакета",
+            "description": "Source or destination MAC address filter",
+            "enableInvert": true,
+            "pattern": "^!?((\\d|[a-fA-F]){2}:){5}(\\d|[a-fA-F]){2}$",
+            "ruPatternDescription": "MAC адрес",
+            "patternDescription": "MAC address",
+            "patternExample": [
+                "ff:ff:ff:ff:ff:ff",
+                "BE:AF:CO:OF:FE:E0"
+            ]
+        },
+        "count": {
+            "$ref": "#/definitions/count"
+        },
+        "file": {
+            "type": "string",
+            "ruDescription": "Сохранить дамп пакетов в файл",
+            "description": "File name for packet dump",
+            "pattern": "^[a-zA-Z0-9\\_\\-\\.]+$",
+            "ruPatternDescription": "Буквы, цифры и перечиленные символы: _-.",
+            "patternDescription": "Letters, digits and symbols: _-."
         }
     }
 }
