@@ -7,7 +7,7 @@
             "title": "Local IP",
             "ruDescription": "Локальный адрес или интерфейс источника",
             "description": "Local source address or interface"
-        },
+        }
     },
     "required": [
         "host"
