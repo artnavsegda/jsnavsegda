@@ -1,6 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
+    "ruDescription": "Сетевой анализатор пакетов",
+    "description": "Network packet analyzer",
     "definitions": {
         "count": {
             "type": "number",
@@ -92,6 +94,15 @@
             "pattern": "^[a-zA-Z0-9\\_\\-\\.]+$",
             "ruPatternDescription": "Буквы, цифры и перечиленные символы: _-.",
             "patternDescription": "Letters, digits and symbols: _-."
+        }
+    },
+    "actions": {
+        "start": {
+            "exec": "subscript/tools/sniffer.uc",
+            "args": [
+                "run"
+            ],
+            "wait": true
         }
     }
 }
