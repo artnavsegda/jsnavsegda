@@ -1,6 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
+    "ruDescription": "ARP Ping удалённого узла",
+    "description": "ARP requests to remote host",
     "definitions": {
         "local-ip": {
             "$ref": "/defaults#/definitions/interface-ipaddr",
@@ -38,8 +40,6 @@
                 "run",
                 "tools/arping"
             ],
-            "ruDescription": "ARP Ping удалённого узла",
-            "description": "ARP requests to remote host",
             "wait": true
         }
     }

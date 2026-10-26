@@ -1,6 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
+    "ruDescription": "Загрузить файл на устройство",
+    "description": "Upload file to device storage",
     "required": [
         "url"
     ],
@@ -36,8 +38,6 @@
     },
     "actions": {
         "start": {
-            "ruDescription": "Загрузить файл на устройство",
-            "description": "Upload file to device storage",
             "exec": "subscript/tools/download.uc",
             "args": [
                 "run"

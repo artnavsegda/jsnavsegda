@@ -1,6 +1,8 @@
 {
     "$schema": "http://json-schema.org/schema#",
     "type": "object",
+    "ruDescription": "Ping удалённого узла",
+    "description": "ICMP echo requests to remote host",
     "definitions": {
         "local-ip": {
             "$ref": "/defaults#/definitions/interface-ipaddr",
@@ -35,6 +37,16 @@
             "default": 64,
             "ruDescription": "Размер пакета",
             "description": "Packet size"
+        }
+    },
+    "actions": {
+        "start": {
+            "exec": "handler",
+            "args": [
+                "run",
+                "tools/ping"
+            ],
+            "wait": true
         }
     }
 }
