@@ -1,0 +1,316 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "documentation": ["local", "global"],
+  "title": "Tools",
+  "type": "object",
+  "ruDescription": "Набор вспомогательных утилит",
+  "decription": "System utilities and diagnostic tools",
+  "noExport": true,
+  "definitions": {
+    "local-ip": {
+      "$ref": "/defaults#/definitions/interface-ipaddr",
+      "title": "Local IP",
+      "ruDescription": "Локальный адрес или интерфейс источника",
+      "description": "Local source address or interface"
+    },
+    "count": {
+      "type": "number",
+      "minimum": 1,
+      "default": 10,
+      "ruDescription": "Число отправляемых пакетов",
+      "description": "Number of packets to send"
+    }
+  },
+
+  "actions": {
+    "download": {
+      "ruDescription": "Загрузить файл на устройство",
+      "description": "Upload file to device storage",
+      "exec": "subscript/tools/download.uc",
+      "args": ["run"],
+      "wait": true,
+      "schema": {
+        "required": ["url"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "ruDescription": "Адрес ресурса",
+            "description": "Resource URL",
+            "title": "URL"
+          },
+          "to-file": {
+            "$ref": "/defaults#/definitions/name-ext",
+            "ruDescription": "Сохранить файл с этим именем",
+            "description": "Save file with specified filename",
+            "title": "To file"
+          },
+          "username": {
+            "$ref": "/defaults#/definitions/username",
+            "ruDescription": "Имя пользователя для аутентификации",
+            "description": "Username for authentication"
+          },
+          "password": {
+            "$ref": "/defaults#/definitions/password",
+            "ruDescription": "Пароль для аутентификации",
+            "description": "Password for authentication"
+          },
+          "save": {
+            "type": "boolean",
+            "ruDescription": "Сохранить файл в хранилище",
+            "description": "Save file to permanent storage",
+            "title": "Save to storage"
+          }
+        }
+      }
+    },
+
+    "ping": {
+      "exec": "handler",
+      "args": ["run", "tools/ping"],
+      "ruDescription": "Ping удалённого узла",
+      "description": "ICMP echo requests to remote host",
+      "wait": true,
+      "schema": {
+        "required": ["host"],
+        "properties": {
+          "host": {
+            "$ref": "/defaults#/definitions/host"
+          },
+          "local-ip": { "$ref": "#/definitions/local-ip" },
+          "count": { "$ref": "#/definitions/count" },
+          "size": {
+            "type": "number",
+            "minimum": 8,
+            "default": 64,
+            "ruDescription": "Размер пакета",
+            "description": "Packet size"
+          }
+        }
+      }
+    },
+
+    "sniffer": {
+      "exec": "subscript/tools/sniffer.uc",
+      "args": ["run"],
+      "ruDescription": "Сетевой анализатор пакетов",
+      "description": "Network packet analyzer",
+      "wait": true,
+      "schema": {
+        "required": ["interface"],
+        "properties": {
+          "interface": {
+            "strictEnum": true,
+            "$ref": "/defaults#/definitions/interface",
+            "ruDescription": "Интерфейс для захвата пакетов",
+            "description": "Packet capture interface"
+          },
+          "proto": {
+            "type": "string",
+            "title": "Protocol",
+            "enum": ["arp", "aarp", "rarp", "ip", "ip6", "ipx", "icmp", "igmp", "tcp", "udp", "esp", "vlan", "stp", "pppoed", "pppoes", "mpls"],
+            "strictEnum": true,
+            "default": "none",
+            "ruDescription": "Фильтр по протоколу",
+            "description": "Protocol filter"
+          },
+          "host": {
+            "$ref": "/defaults#/definitions/host-cidr",
+            "enableInvert": true,
+            "ruDescription": "Фильтр по адресу или сети источника или назначения пакета",
+            "description": "Source or destination host or network filter",
+            "pattern": "(^!?([01]?\\d\\d?|2[0-4]\\d|25[0-5])(\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])){3}(\\/([0-2]?\\d|3[0-2]))?$)|(^!?(?!-)(?:(?:(?:(?:\\d?[A-Za-z-])|(?:[A-Za-z]))[A-Za-z-\\d]*(?:(?:[A-Za-z]*\\d)|(?:[A-Za-z])?)|\\d+)\\.*)*(?:(?:(?:\\d?[A-Za-z-])|(?:[A-Za-z]))[A-Za-z-\\d]*(?:(?:[A-Za-z]*\\d)|(?:[A-Za-z])))$)",
+            "ruPatternDescription": "Адрес хоста (FQDN или CIDR адрес)",
+            "patternDescription": "Host address (FQDN or CIDR address)",
+            "patternExample": ["localhost", "sample.example.com", "8.8.8.8", "192.168.1.0/24", "!192.168.1.0/24"]
+          },
+          "port": {
+            "$ref": "/defaults#/definitions/port",
+            "enableInvert": true,
+            "ruDescription": "Фильтр по порту источника или назначения пакета",
+            "description": "Source or destination port filter"
+          },
+          "mac": {
+            "type": "string",
+            "title": "MAC",
+            "ruDescription": "Фильтр по MAC адресу источника или назначения пакета",
+            "description": "Source or destination MAC address filter",
+            "enableInvert": true,
+            "pattern": "^!?((\\d|[a-fA-F]){2}:){5}(\\d|[a-fA-F]){2}$",
+            "ruPatternDescription": "MAC адрес",
+            "patternDescription": "MAC address",
+            "patternExample": ["ff:ff:ff:ff:ff:ff", "BE:AF:CO:OF:FE:E0"]
+          },
+          "count": { "$ref": "#/definitions/count" },
+          "file": {
+            "type": "string",
+            "ruDescription": "Сохранить дамп пакетов в файл",
+            "description": "File name for packet dump",
+            "pattern": "^[a-zA-Z0-9\\_\\-\\.]+$",
+            "ruPatternDescription": "Буквы, цифры и перечиленные символы: _-.",
+            "patternDescription": "Letters, digits and symbols: _-."
+          }
+        }
+      }
+    },
+    "arping": {
+      "exec": "handler",
+      "args": ["run", "tools/arping"],
+      "ruDescription": "ARP Ping удалённого узла",
+      "description": "ARP requests to remote host",
+      "wait": true,
+      "schema": {
+        "required": ["host", "local-ip"],
+        "properties": {
+          "host": { "$ref": "/defaults#/definitions/host" },
+          "local-ip": { "$ref": "#/definitions/local-ip" },
+          "count": { "$ref": "#/definitions/count" }
+        }
+      }
+    },
+    "traceroute": {
+      "exec": "handler",
+      "args": ["run", "tools/traceroute"],
+      "wait": true,
+      "ruDescription": "traceroute к удалённому узлу",
+      "description": "Traceroute to remote host",
+      "schema": {
+        "required": ["host"],
+        "properties": {
+          "host": { "$ref": "/defaults#/definitions/host" },
+          "local-ip": { "$ref": "#/definitions/local-ip" },
+          "max_hops": {
+            "type": "number",
+            "ruDescription": "Предельное количество прыжков до узла",
+            "description": "Maximum number of hops to host",
+            "title": "Maximum hops",
+            "minimum": 1,
+            "maximum": 255,
+            "default": 30
+          },
+          "protocol": {
+            "type": "string",
+            "ruDescription": "ICMP Echo или UDP датаграммы",
+            "description": "ICMP echo or UDP datagrams",
+            "enum": ["udp"],
+            "default": "icmp",
+            "strictEnum": true
+          },
+          "port": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 65535,
+            "default": 33434,
+            "ruDescription": "Начальный UDP порт назначения, увеличивается с каждой пробой (только для протокола UDP)",
+            "description": "Initial UDP destination port, incremented per probe (UDP protocol only)"
+          }
+        }
+      }
+    },
+    "resolve": {
+      "exec": "handler",
+      "args": ["run", "tools/resolve"],
+      "ruDescription": "Выполнить DNS запрос для удаленного хоста",
+      "description": "Query DNS about remote host",
+      "wait": true,
+      "schema": {
+        "required": ["host"],
+        "properties": {
+          "host": {
+            "$ref": "/defaults#/definitions/host"
+          },
+          "dns-server": {
+            "$ref": "/defaults#/definitions/ipaddr-strict"
+          }
+        }
+      }
+    },
+    "blink": {
+      "exec": "handler",
+      "args": ["run", "tools/blink"],
+      "ruDescription": "Мигаем индикатором питания",
+      "description": "Flashing the power indicator",
+      "wait": true,
+      "schema": {
+        "properties": {
+          "duration": {
+            "type": "number",
+            "ruDescription": "Время (сек) мигания светодиода",
+            "description": "Time (sec) to flashing of the power led",
+            "title": "Duration",
+            "minimim": 1,
+            "maximum": 3600,
+            "default": 10
+          }
+        }
+      }
+    },
+
+    "telnet": {
+      "exec": "handler",
+      "args": ["run", "tools/telnet"],
+      "ruDescription": "Telnet подключение к удалённому узлу",
+      "description": "Telnet client session to remote host",
+      "cliOnly": true,
+      "wait": true,
+      "schema": {
+        "required": ["host"],
+        "properties": {
+          "host": { "$ref": "/defaults#/definitions/host" },
+          "interface": { "$ref": "/defaults#/definitions/interface" },
+          "port": { "$ref": "/defaults#/definitions/port" }
+        }
+      }
+    },
+
+    "journal": {
+      "exec": "subscript/tools/log.uc",
+      "args": ["run"],
+      "ruDescription": "Открыть системный журнал",
+      "description": "View system log entries",
+      "cliOnly": true,
+      "wait": true,
+      "schema": {
+        "properties": {
+          "filter":  {
+            "type": "string",
+            "ruDescription": "Регулярное выражение для фильтрации вывода",
+            "description": "Regular expression for filtering output"
+          },
+          "last":    {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 3072,
+            "ruDescription": "Показать последние N-строк",
+            "description": "Show last N entries"
+          }
+        }
+      }
+    },
+
+    "dashboard": {
+      "exec": "dashboard-cli",
+      "args": [],
+      "ruDescription": "Сводная информация о системе",
+      "description": "System summary",
+      "cliOnly": true,
+      "wait": true
+    },
+
+    "ssh": {
+      "exec": "handler",
+      "args": ["run", "tools/ssh"],
+      "ruDescription": "SSH подключение к удалённому узлу",
+      "description": "SSH client session to remote host",
+      "cliOnly": true,
+      "wait": true,
+      "schema": {
+        "required": ["host", "username"],
+        "properties": {
+          "host": { "$ref": "/defaults#/definitions/host" },
+          "username": { "$ref": "/defaults#/definitions/username" },
+          "port": { "$ref": "/defaults#/definitions/port" }
+        }
+      }
+    }
+  }
+}
