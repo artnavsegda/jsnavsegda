@@ -33,5 +33,16 @@
             "description": "Save file to permanent storage",
             "title": "Save to storage"
         }
+    },
+    "actions": {
+        "start": {
+            "ruDescription": "Загрузить файл на устройство",
+            "description": "Upload file to device storage",
+            "exec": "subscript/tools/download.uc",
+            "args": [
+                "run"
+            ],
+            "wait": true
+        }
     }
 }
