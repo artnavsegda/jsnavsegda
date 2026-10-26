@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "definitions": {
+        "local-ip": {
+            "$ref": "/defaults#/definitions/interface-ipaddr",
+            "title": "Local IP",
+            "ruDescription": "Локальный адрес или интерфейс источника",
+            "description": "Local source address or interface"
+        },
+    },
+    "required": [
+        "host"
+    ],
+    "properties": {
+        "host": {
+            "$ref": "/defaults#/definitions/host"
+        },
+        "local-ip": {
+            "$ref": "#/definitions/local-ip"
+        },
+        "max_hops": {
+            "type": "number",
+            "ruDescription": "Предельное количество прыжков до узла",
+            "description": "Maximum number of hops to host",
+            "title": "Maximum hops",
+            "minimum": 1,
+            "maximum": 255,
+            "default": 30
+        },
+        "protocol": {
+            "type": "string",
+            "ruDescription": "ICMP Echo или UDP датаграммы",
+            "description": "ICMP echo or UDP datagrams",
+            "enum": [
+                "udp"
+            ],
+            "default": "icmp",
+            "strictEnum": true
+        },
+        "port": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 65535,
+            "default": 33434,
+            "ruDescription": "Начальный UDP порт назначения, увеличивается с каждой пробой (только для протокола UDP)",
+            "description": "Initial UDP destination port, incremented per probe (UDP protocol only)"
+        }
+    }
+}
