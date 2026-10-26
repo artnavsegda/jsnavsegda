@@ -1,0 +1,37 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "type": "object",
+    "required": [
+        "url"
+    ],
+    "properties": {
+        "url": {
+            "type": "string",
+            "ruDescription": "Адрес ресурса",
+            "description": "Resource URL",
+            "title": "URL"
+        },
+        "to-file": {
+            "$ref": "/defaults#/definitions/name-ext",
+            "ruDescription": "Сохранить файл с этим именем",
+            "description": "Save file with specified filename",
+            "title": "To file"
+        },
+        "username": {
+            "$ref": "/defaults#/definitions/username",
+            "ruDescription": "Имя пользователя для аутентификации",
+            "description": "Username for authentication"
+        },
+        "password": {
+            "$ref": "/defaults#/definitions/password",
+            "ruDescription": "Пароль для аутентификации",
+            "description": "Password for authentication"
+        },
+        "save": {
+            "type": "boolean",
+            "ruDescription": "Сохранить файл в хранилище",
+            "description": "Save file to permanent storage",
+            "title": "Save to storage"
+        }
+    }
+}
