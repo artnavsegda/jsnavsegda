@@ -30,5 +30,17 @@
         "count": {
             "$ref": "#/definitions/count"
         }
+    },
+    "actions": {
+        "start": {
+            "exec": "handler",
+            "args": [
+                "run",
+                "tools/arping"
+            ],
+            "ruDescription": "ARP Ping удалённого узла",
+            "description": "ARP requests to remote host",
+            "wait": true
+        }
     }
 }
